@@ -1,0 +1,3 @@
+($ doubler (λ (n) (* n 2)))
+
+(write (doubler 10))
