@@ -1,9 +1,15 @@
-export const isWhitespace = (str: string | null) => {
-  return str === " " || str === "\t" || str === "\n" || str === "\r";
-};
+export const Char = {
+  isWhitespace(str: string) {
+    return str.trim() === "";
+  },
 
-export const isParenthesis = (str: string | null) => {
-  return str === "(" || str === ")";
+  isParenthesis(str: string) {
+    return str === "(" || str === ")";
+  },
+
+  isComment(str: string) {
+    return str === "#";
+  },
 };
 
 const __debug = false;

@@ -1,5 +1,5 @@
 import { FileReader } from "./FileReader";
-import { isWhitespace, isParenthesis } from "./utils";
+import { Char } from "./utils";
 
 class CharReader {
   private __index = 0;
@@ -8,8 +8,8 @@ class CharReader {
     this.__str = str;
   }
 
-  public next = () => (this.eol() ? null : this.__str[this.__index++]);
-  public peek = () => (this.eol() ? null : this.__str[this.__index]);
+  public next = () => (this.eol() ? "" : this.__str[this.__index++]);
+  public peek = () => (this.eol() ? "" : this.__str[this.__index]);
   public eol = () => this.__index == this.__str.length;
 }
 
@@ -41,11 +41,20 @@ export class Tokenizer {
   };
 
   private _createToken = (value: string): Token => {
-    const baseToken = { line: this.__line };
+    const baseToken = {
+      line: this.__line,
+    };
+
     if (value === "(") {
-      return { type: TokenType.LeftParenthesis, ...baseToken };
+      return {
+        type: TokenType.LeftParenthesis,
+        ...baseToken,
+      };
     } else if (value === ")") {
-      return { type: TokenType.RightParenthesis, ...baseToken };
+      return {
+        type: TokenType.RightParenthesis,
+        ...baseToken,
+      };
     } else if (value.startsWith('"')) {
       return {
         type: TokenType.String,
@@ -57,11 +66,23 @@ export class Tokenizer {
       if (value.length !== 2 || (flag !== "f" && flag !== "t")) {
         throw `${value} is not a valid boolean constant, expected #t or #f`;
       }
-      return { type: TokenType.Boolean, value: flag === "t", ...baseToken };
+      return {
+        type: TokenType.Boolean,
+        value: flag === "t",
+        ...baseToken,
+      };
     } else if (value.match(/^[a-zA-Z_][\w-]*$/)) {
-      return { type: TokenType.Identifier, name: value, ...baseToken };
+      return {
+        type: TokenType.Identifier,
+        name: value,
+        ...baseToken,
+      };
     } else if (value.match(/^[!@$%&/.\-\\λ=?+|*^]+$/)) {
-      return { type: TokenType.Symbol, name: value, ...baseToken };
+      return {
+        type: TokenType.Symbol,
+        name: value,
+        ...baseToken,
+      };
     } else {
       const parsedValue = parseFloat(value);
       if (!isNaN(parsedValue)) {
@@ -73,12 +94,14 @@ export class Tokenizer {
 
   private _cacheTokens = () => {
     let row: string | null;
+
     while (!(row = (this.__reader.readLine() ?? "").trim())) {
       this.__line++;
       if (this.eof()) {
         return;
       }
     }
+
     this.__line++;
     const reader = new CharReader(row);
     const buffer = Array<string>();
@@ -92,10 +115,12 @@ export class Tokenizer {
     };
 
     while (!reader.eol()) {
-      const next = reader.next() as string;
-      if (isWhitespace(next)) {
+      const next = reader.next();
+      if (Char.isWhitespace(next)) {
         checkBuffer();
-      } else if (isParenthesis(next)) {
+      } else if (Char.isComment(next)) {
+        break;
+      } else if (Char.isParenthesis(next)) {
         checkBuffer();
         this.__cache.push({
           line: this.__line,
@@ -111,9 +136,9 @@ export class Tokenizer {
           if (reader.eol()) {
             throw `Unexpected end-of-line reading string on line ${this.__line}`;
           }
-          buffer.push(reader.next() as string);
+          buffer.push(reader.next());
         }
-        buffer.push(reader.next() as string);
+        buffer.push(reader.next());
       } else {
         buffer.push(next);
       }
