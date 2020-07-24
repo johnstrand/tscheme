@@ -16,7 +16,7 @@ export const Char = {
   },
 
   isComment(str: string) {
-    return str === "#";
+    return str === ";";
   },
 };
 
@@ -36,17 +36,4 @@ export const Tokens = {
   isSymbol(token: any): token is SymbolToken {
     return token && token.type == TokenType.Symbol;
   },
-};
-
-const __debug = false;
-export const log = <T>(content: T, message?: string) => {
-  if (!__debug) {
-    return content;
-  }
-  if (message) {
-    console.log(message, content);
-  } else {
-    console.log(content);
-  }
-  return content;
 };

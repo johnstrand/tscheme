@@ -1,6 +1,6 @@
-# This is an entire line comment
+; This is an entire line comment
 ($ multiplier (\ (m) (\ (n) (* n m))))
-($ doubler (\ (n) (* n 2))) # This an inline comment
+($ doubler (\ (n) (* n 2))) ; This an inline comment
 ($ quad (multiplier 4))
 
 (write "doubler" (doubler 10))

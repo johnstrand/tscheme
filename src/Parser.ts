@@ -10,7 +10,14 @@ export type SyntaxTree =
   | Exclude<Token, LParenToken | RParenToken>
   | SyntaxTree[];
 
+/**
+ * Consumes tokens and creates an abstract syntax tree (AST)
+ */
 export const Parser = {
+  /**
+   * Reads tokens from the specified token source and outputs an abstract syntax tree
+   * @param tokenizer The token source
+   */
   read(tokenizer: Tokenizer) {
     // Check if we have run out of tokens
     if (tokenizer.eof()) {

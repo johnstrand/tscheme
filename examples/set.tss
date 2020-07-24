@@ -1,7 +1,7 @@
 ($ x 5)
 (write x)
-# This will crash
-# ($ x 10)
-# This will work
+; This will crash
+; ($ x 10)
+; This will work
 (set x 10)
 (write x)

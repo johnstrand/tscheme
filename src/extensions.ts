@@ -1,5 +1,11 @@
 interface Array<T> {
+  /**
+   * Returns true if array contains at least one element
+   */
   any(): boolean;
+  /**
+   * Empties the array (by setting length to 0)
+   */
   clear(): void;
 }
 
