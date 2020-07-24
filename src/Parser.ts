@@ -6,27 +6,6 @@ import {
   RParenToken,
 } from "./Tokenizer";
 
-/*
-enum SyntaxType {
-  Define,
-  Lambda,
-  Value,
-  Call,
-  Identifier
-}
-
-type LambdaSyntax = {
-  type: SyntaxType.Lambda,
-  parameters: IdentifierToken[]
-
-}
-
-type CallSyntax = {
-  target: CallSyntax | IdentifierToken,
-  arguments: CallSyntax | IdentifierToken | LambdaSyntax
-}
-*/
-
 export type SyntaxTree =
   | Exclude<Token, LParenToken | RParenToken>
   | SyntaxTree[];
