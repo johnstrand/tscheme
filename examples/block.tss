@@ -1,0 +1,7 @@
+($ test 
+    (\ (n, m)
+        (block
+            (write "Adding ", n, " and ", m)
+            (+ n, m))))
+
+(write (test 3, 5))

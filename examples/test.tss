@@ -1,2 +1,3 @@
-(write "Hello world")
-(write (+ 1 2))
+($ test (\ (text) (write text)))
+
+(test "Hello world")
