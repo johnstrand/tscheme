@@ -116,7 +116,7 @@ export class Tokenizer {
 
     while (!reader.eol()) {
       const next = reader.next();
-      if (Char.isWhitespace(next)) {
+      if (Char.isWhitespace(next) || next === ",") {
         checkBuffer();
       } else if (Char.isComment(next)) {
         break;
