@@ -8,6 +8,7 @@ class CharReader {
     this.__str = str;
   }
 
+  // Return empty string rather than null to avoid a lot of null checks later
   public next = () => (this.eol() ? "" : this.__str[this.__index++]);
   public peek = () => (this.eol() ? "" : this.__str[this.__index]);
   public eol = () => this.__index == this.__str.length;

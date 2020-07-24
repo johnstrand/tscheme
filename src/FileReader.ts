@@ -1,5 +1,4 @@
 import { readFileSync } from "fs";
-import { log } from "./utils";
 
 export class FileReader {
   private __content: string[];
@@ -9,8 +8,9 @@ export class FileReader {
     this.__content = readFileSync(file, "utf8").split(/\r\n|\n|\r/);
   }
 
-  readLine = () =>
-    log(this.eof() ? null : this.__content[this.__index++], "readline");
+  // Have we reached end of the file? Return null, else return current line and
+  // increment the pointer
+  readLine = () => (this.eof() ? null : this.__content[this.__index++]);
 
   eof = () => this.__index === this.__content.length;
 }
